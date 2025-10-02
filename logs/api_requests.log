@@ -1335,3 +1335,7 @@ INFO 2025-10-02 00:37:56,102 consumers 8 135525026626432 WS CONNECTION ACCEPTED:
 INFO 2025-10-02 00:58:19,142 consumers 8 128693954046848 REDIS: Conexión directa a Redis para throttling e historial establecida.
 ERROR 2025-10-02 02:08:24,137 consumers 10460 15952 REDIS: No se pudo conectar a Redis. La funcionalidad de chat (historial/throttling) no funcionar�.
 INFO 2025-10-02 01:36:29,755 consumers 8 123341984156544 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-02 11:26:18,286 api_logger REDIS: Direct Redis connection for throttling and history established at redis:6379.
+INFO 2025-10-02 11:37:09,634 api_logger REDIS: Direct Redis connection for throttling and history established at redis:6379.
+INFO 2025-10-02 11:47:29,029 api_logger REDIS: Direct Redis connection for throttling and history established at redis:6379.
+INFO 2025-10-02 11:54:33,022 api_logger REDIS: Direct Redis connection for throttling and history established at redis:6379.

@@ -113,46 +113,45 @@
     </style>
 </head>
 <body class="p-4 md:p-6">
-    <div class="chat-container"> 
+    <div class="chat-container">
         
         <div class="sidebar">
             <h2 class="text-xl font-bold text-gray-800 border-b pb-2">Welcome</h2>
-            
+
             <div id="auth-area" class="flex flex-col gap-3 p-3 bg-gray-50 rounded-lg shadow-sm">
                 <div id="user-info" class="text-sm font-semibold text-gray-600 hidden"></div>
                 <input type="text" id="username-input" placeholder="Username" class="p-2 border rounded-md text-sm" value="testuser">
                 <input type="password" id="password-input" placeholder="Password" class="p-2 border rounded-md text-sm" value="password1234">
                 <div class="flex gap-2">
-                    <button id="signup-btn" class="flex-1 bg-green-500 text-white p-2 rounded-md hover:bg-green-600 transition duration-150 text-sm">Sign Up</button>
+                    <button id="signup-btn" class="flex-1 bg-green-500 text-white p-2 rounded-md hover:bg-green-600 transition duration-150 text-sm">Register</button>
                     <button id="login-btn" class="flex-1 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-150 text-sm">Login</button>
                 </div>
             </div>
-            
+
             <div class="p-3 bg-blue-50 rounded-lg shadow-sm mt-2">
                 <h3 class="text-md font-semibold mb-2 text-blue-700">Create New Chat</h3>
                 <input type="text" id="room-name-input" placeholder="Channel Name (Ex: 'general')" class="p-2 border rounded-md w-full mb-2 text-sm">
-                <input type="text" id="invited-username-input" placeholder="Invite (ex: user1,user2)" class="p-2 border rounded-md w-full mb-2 text-sm">
+                <input type="text" id="invited-username-input" placeholder="Invite (e.g.: user1,user2)" class="p-2 border rounded-md w-full mb-2 text-sm">
                 <button id="new-chat-btn" class="w-full bg-indigo-500 text-white p-2 rounded-md hover:bg-indigo-600 transition duration-150 text-sm">
                     + New Chat
                 </button>
             </div>
-            
+
             <h3 class="text-lg font-semibold mt-4 mb-2 border-b pb-1 text-gray-700">Your Chats</h3>
             <div id="room-list" class="flex-grow overflow-y-auto space-y-2">
-                
                 <p class="text-sm text-gray-500 p-2">Log in to view chats.</p>
             </div>
         </div>
-        
-        <div class="main-chat"> 
+
+        <div class="main-chat">
             <div id="current-room-header" class="p-4 bg-white border-b shadow-md sticky top-0 z-10">
                 <div class="flex justify-between items-center mb-2">
                     <h3 class="text-lg font-bold text-gray-800" id="chat-title-display">Select a chat</h3>
                     <span id="ws-status" class="text-sm px-3 py-1 rounded-full bg-red-100 text-red-700">Disconnected</span>
                 </div>
-                
+
                 <div class="flex mt-3 space-x-2">
-                    <input type="text" id="invite-username" placeholder="Username to invite (ex: qa)"
+                    <input type="text" id="invite-username" placeholder="Username to invite (e.g.: qa)"
                         class="flex-grow p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm">
                     <button onclick="addParticipant()"
                         class="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-150 shadow-md text-sm">
@@ -160,18 +159,18 @@
                     </button>
                 </div>
             </div>
-            
+
             <div id="message-display">
                 <p class="text-center text-gray-500 pt-10">Connect to a room to view history and start chatting.</p>
             </div>
-            
+
             <div id="message-input-area" class="p-4 bg-gray-50 border-t flex gap-3">
-                <input type="text" id="message-input" placeholder="Type your message..." class="flex-grow p-3 border rounded-lg focus:ring-blue-500 focus:border-blue-500 text-sm" disabled>
+                <input type="text" id="message-input" placeholder="Write your message..." class="flex-grow p-3 border rounded-lg focus:ring-blue-500 focus:border-blue-500 text-sm" disabled>
                 <button id="send-btn" class="bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition duration-150 disabled:bg-gray-400 text-sm" disabled>
                     Send
                 </button>
             </div>
-            
+
             <div id="log-area">
                 <p class="log-info text-sm">Log: Waiting for user actions...</p>
             </div>
@@ -179,10 +178,9 @@
     </div>
 
     <script>
-        const API_URL = '/api'; 
-        const WS_URL_BASE = 'ws://' + window.location.host + '/ws/chat/'; // Base para WebSockets
+        const API_URL = '/api';
+        const WS_URL_BASE = 'ws://' + window.location.host + '/ws/chat/';
 
-        // UI Elements 
         const usernameInput = document.getElementById('username-input');
         const passwordInput = document.getElementById('password-input');
         const signupBtn = document.getElementById('signup-btn');
@@ -190,51 +188,50 @@
         const userInfoDiv = document.getElementById('user-info');
         
         const roomNameInput = document.getElementById('room-name-input');
-        const invitedUsernameInput = document.getElementById('invited-username-input');
+        const invitedUsersInput = document.getElementById('invited-username-input');
         const newChatBtn = document.getElementById('new-chat-btn');
         const roomListDiv = document.getElementById('room-list');
         
-        const currentRoomHeader = document.getElementById('current-room-header');
-        const chatTitleDisplay = document.getElementById('chat-title-display'); // Nuevo ID para el título
+        const chatTitleDisplay = document.getElementById('chat-title-display');
         const wsStatusSpan = document.getElementById('ws-status');
         const messageDisplay = document.getElementById('message-display');
         const messageInput = document.getElementById('message-input');
         const sendBtn = document.getElementById('send-btn');
         const logArea = document.getElementById('log-area');
         
-        const inviteUsernameInput = document.getElementById('invite-username'); // Nuevo input
-        
+        const inviteUsernameInput = document.getElementById('invite-username');
+
         let authToken = localStorage.getItem('authToken') || null;
         let currentUsername = localStorage.getItem('currentUsername') || null;
         let currentRoom = null;
-        let currentConversationId = null; 
-        let ws = null;  
+        let currentConversationId = null;
+        let ws = null;
 
         function log(type, message) {
             const time = new Date().toLocaleTimeString();
             const logElement = document.createElement('p');
             logElement.className = `text-sm log-${type}`;
             logElement.textContent = `[${time}] ${message}`;
-            logArea.prepend(logElement);             
+            logArea.prepend(logElement);
             while (logArea.children.length > 10) {
                 logArea.removeChild(logArea.lastChild);
             }
         }
         
-        function showMessage(message, type) {             
+        function showMessage(message, type) {
             log(type === 'success' ? 'success' : 'error', message);
         }
 
         function updateAuthState(token, username) {
             authToken = token;
-            currentUsername = username;             
+            currentUsername = username;
             
             if (ws) {
                 ws.close();
                 ws = null;
             }
             currentRoom = null;
-            currentConversationId = null; 
+            currentConversationId = null;
             messageDisplay.innerHTML = '';
             messageInput.disabled = true;
             sendBtn.disabled = true;
@@ -251,25 +248,23 @@
                 log('success', `Authentication successful. Welcome, ${username}.`);
                 fetchConversations();
             } else {
-                // Log out 
                 localStorage.removeItem('authToken');
                 localStorage.removeItem('currentUsername');
                 userInfoDiv.classList.add('hidden');
 
-                signupBtn.textContent = 'Sign Up';
+                signupBtn.textContent = 'Register';
                 loginBtn.classList.remove('hidden');
 
-                // Clear UI
                 roomListDiv.innerHTML = '<p class="text-sm text-gray-500 p-2">Log in to view chats.</p>';
                 chatTitleDisplay.textContent = 'Select a chat';
                 wsStatusSpan.textContent = 'Disconnected';
                 wsStatusSpan.className = 'text-sm px-3 py-1 rounded-full bg-red-100 text-red-700';
             }
-        }         
+        }
 
-        async function handleAuth(endpoint) {             
+        async function handleAuth(endpoint) {
             if (endpoint === 'signup' && signupBtn.textContent === 'Logout') {
-                updateAuthState(null, null); 
+                updateAuthState(null, null);
                 log('info', 'Session closed successfully.');
                 return; 
             }
@@ -296,8 +291,7 @@
                 if (response.ok) {
                     updateAuthState(data.token, data.username);
                 } else {
-                    log('error', `Failed ${endpoint}: ${data.error || JSON.stringify(data)}`);
-                    
+                    log('error', `Failed in ${endpoint}: ${data.error || JSON.stringify(data)}`);
                     updateAuthState(null, null); 
                 }
             } catch (error) {
@@ -305,13 +299,13 @@
             }
         }
 
-        async function fetchConversations() {             
+        async function fetchConversations() {
             if (!authToken) {
-                log('info', 'No authentication token. Skipping chat load.');
+                log('info', 'No authentication token. Skipping chat loading.');
                 return;
             }
 
-            try {                 
+            try {
                 const response = await fetch(`${API_URL}/conversations/`, {
                     headers: {
                         'Authorization': `Token ${authToken}`
@@ -324,7 +318,7 @@
                     log('success', 'Conversations loaded successfully.');
                     roomListDiv.innerHTML = '';
                     conversations.forEach(conv => {
-                        const item = document.createElement('div');                         
+                        const item = document.createElement('div');
                         
                         const participants = conv.participants_info.filter(p => p !== currentUsername).join(', ');
                         
@@ -332,17 +326,16 @@
                         item.innerHTML = `
                             <p class="text-base truncate">${conv.name}</p>
                             <p class="text-xs text-gray-500 truncate">Members: ${participants || currentUsername}</p>
-                        `;                         
+                        `;
                         item.onclick = () => joinRoom(conv.name, conv.id); 
                         roomListDiv.appendChild(item);
-                                                             
+                        
                         if (conv.id === currentConversationId) {
                             item.classList.add('active');
                         }
                     });
                 } else {
                     log('error', `Failed to load chats (Status: ${response.status}): ${conversations.detail || JSON.stringify(conversations)}`);
-                    
                     if (response.status === 401 || response.status === 403) {
                         log('error', 'Authentication token rejected by server. Forcing logout.');
                         updateAuthState(null, null);
@@ -358,7 +351,7 @@
                 return log('error', 'You must log in to create a chat.');
             }
             const roomName = roomNameInput.value.trim();
-            const invitedUsers = invitedUsernameInput.value.trim();
+            const invitedUsers = invitedUsersInput.value.trim();
 
             if (!roomName) {
                 return log('error', 'You must enter a room name.');
@@ -375,7 +368,7 @@
                     },
                     body: JSON.stringify({ 
                         name: roomName,
-                        invited_username: invitedUsers // Envia la cadena de usuarios separada por comas
+                        invited_username: invitedUsers
                     }) 
                 });
 
@@ -384,9 +377,9 @@
                 if (response.ok) {
                     log('success', `Room "${data.name}" created successfully.`);
                     roomNameInput.value = '';
-                    invitedUsernameInput.value = '';
-                    fetchConversations(); 
-                    joinRoom(data.name, data.id); 
+                    invitedUsersInput.value = '';
+                    fetchConversations();
+                    joinRoom(data.name, data.id);
                 } else {
                     log('error', `Failed to create room: ${data.detail || JSON.stringify(data)}`);
                     if (response.status === 401 || response.status === 403) {
@@ -397,7 +390,7 @@
                 log('error', `Network error creating room: ${error.message}`);
             }
         }
-        
+
         async function addParticipant() {
             const username = inviteUsernameInput.value.trim();
             const conversationId = currentConversationId;
@@ -433,47 +426,48 @@
 
                 if (response.ok) {
                     showMessage(data.message || `Successfully invited ${username}!`, 'success');
-                    inviteUsernameInput.value = '';                         
+                    inviteUsernameInput.value = '';
                     
                     fetchConversations(); 
 
-                } else if (response.status === 404 && data.error.includes('no existe')) {
+                } else if (response.status === 404 && data.error && data.error.includes('no está registrado')) {
                     showMessage(`Error: User '${username}' is not registered.`, 'error');
                 } else {
                     showMessage(`Error inviting ${username}: ${data.error || 'Server failure'}`, 'error');
                 }
 
             } catch (error) {
-                console.error('Error al añadir participante:', error);
-                showMessage('Server connection error.', 'error');
+                console.error('Error adding participant:', error);
+                showMessage('Connection error with the server.', 'error');
             }
-        }         
+        }
 
         function joinRoom(roomName, conversationId) {
             if (!authToken) {
                 return log('error', 'You need to be authenticated to join a chat.');
-            }             
+            }
             if (currentRoom === roomName && currentConversationId === conversationId) return;
-                                        
+            
             if (ws) {
                 ws.close();
             }
 
             currentRoom = roomName;
-            currentConversationId = conversationId;                                         
+            currentConversationId = conversationId;
+            
             messageDisplay.innerHTML = '';
             messageInput.value = '';
             chatTitleDisplay.textContent = `Chat: ${roomName}`;
             messageInput.disabled = false;
             sendBtn.disabled = false;
-                                        
+            
             document.querySelectorAll('.room-item').forEach(item => {
-                item.classList.remove('active');                 
+                item.classList.remove('active');
                 if (item.onclick.toString().includes(`joinRoom('${roomName}', ${conversationId})`)) {
                     item.classList.add('active');
                 }
             });
-            
+
             const wsUrl = `${WS_URL_BASE}${roomName}/?token=${authToken}`;
             
             ws = new WebSocket(wsUrl);
@@ -482,14 +476,14 @@
                 wsStatusSpan.textContent = 'Connected';
                 wsStatusSpan.className = 'text-sm px-3 py-1 rounded-full bg-green-100 text-green-700';
                 log('info', `Connected to room: ${roomName}`);
-                fetchHistory(roomName); 
+                fetchHistory(roomName);
             };
 
             ws.onclose = (e) => {
                 wsStatusSpan.textContent = 'Disconnected';
                 wsStatusSpan.className = 'text-sm px-3 py-1 rounded-full bg-red-100 text-red-700';
                 log('info', `Disconnected from room: ${roomName} (Code: ${e.code})`);
-                                            
+                
                 if (e.code === 4000) {
                      log('error', 'Disconnection due to invalid token. Please log in again.');
                      updateAuthState(null, null);
@@ -513,8 +507,7 @@
 
         async function fetchHistory(roomName) {
             if (!authToken) return;
-             try {                 
-                 // '/api/messages/<roomName>/'
+             try {
                  const response = await fetch(`${API_URL}/messages/${roomName}/`, {
                      headers: {
                          'Authorization': `Token ${authToken}`
@@ -524,7 +517,7 @@
                  const messages = await response.json();
 
                  if (response.ok) {
-                     messageDisplay.innerHTML = ''; 
+                     messageDisplay.innerHTML = '';
                      messages.forEach(msg => {
                          displayMessage(msg.user, msg.content);
                      });
@@ -541,7 +534,6 @@
             const isMine = user === currentUsername;
             const bubble = document.createElement('div');
             
-            // Format the message
             const content = document.createElement('p');
             content.className = 'text-xs font-semibold mb-1';
             content.textContent = isMine ? 'You' : user;
@@ -566,7 +558,7 @@
                 }));
                 messageInput.value = '';
             } else if (!ws || ws.readyState !== WebSocket.OPEN) {
-                log('error', 'You are not connected to a chat or the WS is closed.');
+                log('error', 'You are not connected to a chat or the WebSocket is closed.');
             }
         }
 
@@ -586,12 +578,10 @@
             if (e.key === 'Enter') {
                 sendMessage();
             }
-        });               
+        });
         
-        window.addParticipant = addParticipant;
-
-        document.addEventListener('DOMContentLoaded', () => {             
-            if (authToken && currentUsername) {                 
+        document.addEventListener('DOMContentLoaded', () => {
+            if (authToken && currentUsername) {
                 updateAuthState(authToken, currentUsername);
             }
         });

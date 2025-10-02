@@ -9,99 +9,106 @@ from django.views.generic import TemplateView
 from .models import Conversation, Message 
 from .serializers import SignUpSerializer, ConversationSerializer 
 
-class IndexView(TemplateView):    
+class IndexView(TemplateView):
+    """View to serve the HTML client that contains the entire frontend."""
     template_name = "index.html" 
 
 class SignUpView(generics.CreateAPIView):
-    """Vista para registrar nuevos usuarios."""
+    """View for registering new users."""
     queryset = User.objects.all()
     serializer_class = SignUpSerializer
     permission_classes = [] 
 
     def create(self, request, *args, **kwargs):
-        """Maneja el registro, crea el usuario y genera el token."""
+        """Handles registration, creates the user, and generates the token."""
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         try:
-            user = serializer.save()            
+            user = serializer.save()             
             token, created = Token.objects.get_or_create(user=user)
             return Response({
                 "username": user.username,
                 "token": token.key
             }, status=status.HTTP_201_CREATED)
         except IntegrityError:
-            return Response({"error": "El nombre de usuario ya existe."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "The username already exists."}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LoginView(generics.GenericAPIView):
-    """Vista para iniciar sesión y obtener el token."""
+    """View for logging in and obtaining the token."""
     permission_classes = []
 
     def post(self, request, *args, **kwargs):
-        """Autentica al usuario y devuelve su token."""
+        """Authenticates the user and returns their token."""
         username = request.data.get('username')
         password = request.data.get('password')
 
         user = authenticate(username=username, password=password)
 
-        if user:            
+        if user:             
             token, created = Token.objects.get_or_create(user=user)
             return Response({
                 "username": user.username,
                 "token": token.key
             }, status=status.HTTP_200_OK)
         
-        return Response({"error": "Credenciales inválidas"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ConversationListView(generics.ListCreateAPIView):
     """
-    Vista para listar las conversaciones del usuario autenticado y crear nuevas.
+    View for listing the authenticated user's conversations and creating new ones.
     """
     serializer_class = ConversationSerializer
     
-    def get_queryset(self):        
+    def get_queryset(self):
+                
         return Conversation.objects.filter(participants=self.request.user).order_by('-created_at')
 
-    def perform_create(self, serializer):        
-        conversation = serializer.save()
-                
+    def perform_create(self, serializer):
+        
+        conversation = serializer.save()         
+        
         conversation.participants.add(self.request.user)
                 
+        # The frontend sends a comma-separated string, e.g., "user1,user2"
         invited_usernames = self.request.data.get('invited_username', '')
         
-        if invited_usernames:            
+        if invited_usernames:             
             username_list = [name.strip() for name in invited_usernames.split(',') if name.strip()]
                         
             invited_users = User.objects.filter(username__in=username_list)
             
-            if invited_users.exists():                
+            if invited_users.exists():                 
                 conversation.participants.add(*invited_users)
 
 class AddParticipantView(generics.UpdateAPIView):
-    
+    """
+    View for adding a participant to an existing conversation.
+    Requires Conversation ID (pk) in the URL and 'username' in the POST body.
+    """
     queryset = Conversation.objects.all()
     
     def update(self, request, *args, **kwargs):
-        conversation = self.get_object()
+        conversation = self.get_object() 
         username_to_add = request.data.get('username')
 
         if not username_to_add:
-            return Response({"error": "Se requiere el nombre de usuario ('username')."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "The username ('username') is required."}, status=status.HTTP_400_BAD_REQUEST)
 
-        try:            
-            user_to_add = User.objects.get(username=username_to_add)            
+        try:             
+            user_to_add = User.objects.get(username=username_to_add)
             
             if user_to_add in conversation.participants.all():
-                return Response({"message": f"El usuario {username_to_add} ya está en la conversación."}, status=status.HTTP_200_OK)
+                return Response({"message": f"User {username_to_add} is already in the conversation."}, status=status.HTTP_200_OK)
             
             conversation.participants.add(user_to_add)
-            conversation.save()            
+            conversation.save()             
 
-            return Response({"message": f"Usuario {username_to_add} añadido exitosamente."}, status=status.HTTP_200_OK)
+            return Response({"message": f"User {username_to_add} added successfully."}, status=status.HTTP_200_OK)
 
         except User.DoesNotExist:
-            return Response({"error": f"El usuario '{username_to_add}' no existe."}, status=status.HTTP_404_NOT_FOUND)
-        except Exception as e:            
-            print(f"Error al añadir participante: {e}") 
-            return Response({"error": "Ocurrió un error al procesar la solicitud."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"error": f"The user '{username_to_add}' does not exist."}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:             
+            print(f"Error adding participant: {e}") 
+            return Response({"error": "An error occurred while processing the request."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
