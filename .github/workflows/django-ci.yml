@@ -1,0 +1,73 @@
+name: Django CI
+
+on:
+push:
+branches: [ "main" ]
+pull_request:
+branches: [ "main" ]
+
+jobs:
+build:
+runs-on: ubuntu-latest
+
+services:  
+  postgres:
+    image: postgres:15
+    env:      
+      POSTGRES_DB: chats_test_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pms
+    ports:
+      - 5432:5432
+    options: >-
+      --health-cmd pg_isready
+      --health-interval 10s
+      --health-timeout 5s
+      --health-retries 5
+  
+  redis:
+    image: redis:7
+    ports:
+      - 6379:6379
+
+steps:
+- uses: actions/checkout@v4
+
+- name: Set up Python 3.11
+  uses: actions/setup-python@v5
+  with:
+    python-version: "3.11"
+
+- name: Install Dependencies
+  run: |
+    python -m pip install --upgrade pip
+    # Instalar librería de desarrollo para psycopg2
+    sudo apt-get update
+    sudo apt-get install -y libpq-dev
+    pip install -r requirements.txt
+  
+- name: Set CI Environment Variables
+  run: |
+    # Exportar variables de entorno para que Django las pueda usar.
+    # Usamos 127.0.0.1 porque los servicios son accesibles a través de localhost en GitHub Actions.
+    echo "DATABASE_HOST=127.0.0.1" >> $GITHUB_ENV
+    echo "DATABASE_PORT=5432" >> $GITHUB_ENV
+    echo "DATABASE_NAME=chats_test_db" >> $GITHUB_ENV
+    echo "DATABASE_USER=postgres" >> $GITHUB_ENV
+    echo "DATABASE_PASSWORD=pms" >> $GITHUB_ENV
+    
+    echo "REDIS_HOST=127.0.0.1" >> $GITHUB_ENV
+    echo "REDIS_PORT=6379" >> $GITHUB_ENV
+
+- name: Wait for PostgreSQL  
+  run: |
+    until pg_isready -h 127.0.0.1 -p 5432 -U postgres; do
+      echo "Waiting for PostgreSQL to start..."
+      sleep 2
+    done
+
+- name: Run Migrations  
+  run: python manage.py migrate --settings=challenge_chat.settings
+
+- name: Run Pytest (API and WebSockets Tests)
+  run: pytest

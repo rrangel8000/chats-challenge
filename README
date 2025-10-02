@@ -1,0 +1,88 @@
+💬 Challenge Chat (Django Channels, Redis, PostgreSQL)
+This project is a real-time chat application built with Django Channels that implements essential backend services for high-availability environments, including Throttling (message rate limiting) and Structured Logging.
+
+- Prerequisites
+You'll need the following programs installed and configured:
+
+Docker and Docker Compose: For orchestration of the database (PostgreSQL), the broker (Redis), and the application server (Django).
+
+Git
+
+Python 3.11 and pip (Optional, only for running tests outside of Docker).
+
+- Local Execution with Docker Compose
+The application is designed to be fully run using Docker Compose, ensuring that the application, database, and Redis are on the same network.
+
+1. Start the Services
+From the project root directory (challenge_chat), execute:
+
+docker-compose up -d --build
+
+This will build the Django container and then start the services: PostgreSQL, Redis, Django (app), and PGAdmin.
+
+2. Application Access
+Chat Application: Open your browser at http://localhost:8000.
+
+PGAdmin (DB Admin): Open your browser at http://localhost:5050.
+
+3. Important Note for Multi-User Features
+All features related to multi-user messaging, such as creating conversations and adding participants via the REST API endpoints, require users to be authenticated. You must register users via the API or create them manually (see step 4).
+
+4. Create a Superuser (Optional)
+If you need a user to access the Django admin:
+
+docker-compose exec app python manage.py createsuperuser
+
+Integration Tests and Throttling Validation
+To verify that the rate limiting logic (Throttling) and message persistence in Redis work correctly, run the tests inside the app container (where Redis and PostgreSQL are accessible by hostname).
+
+1. Install Test Dependencies
+Ensure you have Python dependencies installed within your virtual environment if running Pytest locally, or simply trust that your Dockerfile has already installed everything if using the exec command.
+
+2. Run Throttling Tests
+Execute the following command to run only the Redis integration tests, which will validate the Throttling requirement (it will take about 11 seconds to complete):
+
+# The application service is called 'app' in the docker-compose.yml
+docker-compose exec app pytest chats/tests/test_throttling.py
+
+3. Expected Result
+If the tests are successful, you will see:
+
+================================================== 3 passed in 10.XXs ==================================================
+
+- Logging and Log Files
+The project is configured to log API calls (in this case, WebSocket calls) in a specific format, fulfilling the Logging requirement.
+
+1. File Location
+The log file is generated inside the application container. To view it in real-time or after a session, you can access the container:
+
+# Enter the 'app' container terminal
+docker-compose exec app sh
+
+Once inside the container, the file is located at:
+
+# While inside the container (sh)
+cat logs/api_requests.log
+
+2. Log Format
+Each WebSocket log entry (connection, received message, throttling, disconnection) is recorded in the following format:
+
+[TIMESTAMP] [LEVEL] [LOGGER_NAME] [MODULE] - [CUSTOM_MESSAGE]
+
+Example entry:
+2025-10-02 07:00:00,000 [INFO] [api_logger] [consumers:130] - WS MESSAGE RECEIVED: User username1 sent message (len: 50) to room chat_general.
+
+- Continuous Integration (CI/CD)
+The .github/workflows/django-ci.yml file configures a pipeline that runs on every push to the main branch and on every Pull Request.
+
+This pipeline:
+
+Starts dedicated PostgreSQL and Redis services.
+
+Installs dependencies.
+
+Waits for the DB to be ready.
+
+Runs pytest (including the test_throttling.py tests) to validate all requirements in a clean, isolated environment.
+
+Check the Actions tab on GitHub for the status of the executions.

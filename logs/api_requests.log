@@ -1,0 +1,1337 @@
+WARNING 2025-10-01 14:40:10,180 views 8 139104845022912 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'first_name': [ErrorDetail(string='This field is required.', code='required')], 'last_name': [ErrorDetail(string='This field is required.', code='required')], 'email': [ErrorDetail(string='This field is required.', code='required')], 'password': [ErrorDetail(string='This field is required.', code='required')]}
+WARNING 2025-10-01 14:40:18,308 views 8 139104828237504 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'first_name': [ErrorDetail(string='This field is required.', code='required')], 'last_name': [ErrorDetail(string='This field is required.', code='required')], 'email': [ErrorDetail(string='This field is required.', code='required')], 'password': [ErrorDetail(string='This field is required.', code='required')]}
+WARNING 2025-10-01 14:46:39,626 views 8 139104836630208 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'first_name': [ErrorDetail(string='This field is required.', code='required')], 'last_name': [ErrorDetail(string='This field is required.', code='required')], 'email': [ErrorDetail(string='This field is required.', code='required')], 'password': [ErrorDetail(string='Ensure this field has at least 8 characters.', code='min_length')]}
+WARNING 2025-10-01 14:46:41,430 views 8 139104836630208 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'first_name': [ErrorDetail(string='This field is required.', code='required')], 'last_name': [ErrorDetail(string='This field is required.', code='required')], 'email': [ErrorDetail(string='This field is required.', code='required')], 'password': [ErrorDetail(string='Ensure this field has at least 8 characters.', code='min_length')]}
+WARNING 2025-10-01 14:46:42,185 views 8 139104836630208 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'first_name': [ErrorDetail(string='This field is required.', code='required')], 'last_name': [ErrorDetail(string='This field is required.', code='required')], 'email': [ErrorDetail(string='This field is required.', code='required')], 'password': [ErrorDetail(string='Ensure this field has at least 8 characters.', code='min_length')]}
+WARNING 2025-10-01 14:52:55,075 views 8 123570390824640 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'password': [ErrorDetail(string='Ensure this field has at least 8 characters.', code='min_length')]}
+INFO 2025-10-01 14:53:15,729 views 8 123570390824640 API CALL: POST /api/signup/ | User: rafael | Status: Success (User Created)
+WARNING 2025-10-01 14:54:13,872 views 8 123570390824640 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'username': [ErrorDetail(string='Este nombre de usuario ya está registrado.', code='invalid')]}
+WARNING 2025-10-01 14:59:33,898 views 8 128527026353856 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'username': [ErrorDetail(string='Este nombre de usuario ya está registrado.', code='invalid')]}
+WARNING 2025-10-01 15:05:03,185 views 8 140645123487424 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'username': [ErrorDetail(string='Este nombre de usuario ya está registrado.', code='invalid')]}
+WARNING 2025-10-01 15:10:28,978 views 8 138310504675008 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'username': [ErrorDetail(string='Este nombre de usuario ya está registrado.', code='invalid')]}
+INFO 2025-10-01 15:10:33,069 views 8 138310504675008 API CALL: POST /api/conversations/ | User: rafael | Status: Success (New conversation: general)
+WARNING 2025-10-01 15:14:58,367 views 8 139759592666816 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'username': [ErrorDetail(string='Este nombre de usuario ya está registrado.', code='invalid')]}
+ERROR 2025-10-01 15:15:03,419 views 8 139759592666816 API CALL: POST /api/conversations/ | User: rafael | Status: Internal Server Error: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(general) already exists.
+
+WARNING 2025-10-01 15:18:47,357 views 8 130191311500992 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'username': [ErrorDetail(string='Este nombre de usuario ya está registrado.', code='invalid')]}
+INFO 2025-10-01 15:18:56,127 views 8 130191311500992 API CALL: POST /api/conversations/ | User: rafael | Status: Success (New conversation: chats)
+WARNING 2025-10-01 15:26:12,825 views 8 131959625873088 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'username': [ErrorDetail(string='Este nombre de usuario ya está registrado.', code='invalid')]}
+ERROR 2025-10-01 15:26:17,977 views 8 131959625873088 API CALL: POST /api/conversations/ | User: rafael | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 66, in post
+    conversation = Conversation.objects.create(name=data.get('name', f'Chat con {request.user.username}'))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+INFO 2025-10-01 15:26:26,555 views 8 131959625873088 API CALL: POST /api/conversations/ | User: rafael | Status: Success (New conversation: chat)
+WARNING 2025-10-01 16:11:05,353 views 9 139382910613184 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'username': [ErrorDetail(string='Este nombre de usuario ya está registrado.', code='invalid')]}
+INFO 2025-10-01 16:11:20,967 views 9 139382820431552 API CALL: POST /api/conversations/ | User: rafael | Status: Success (New conversation: main)
+WARNING 2025-10-01 16:21:23,461 views 8 135320555222720 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'username': [ErrorDetail(string='Este nombre de usuario ya está registrado.', code='invalid')]}
+ERROR 2025-10-01 16:21:38,228 views 8 135320460850880 API CALL: POST /api/conversations/ | User: rafael | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 66, in post
+    conversation = Conversation.objects.create(name=data.get('name', f'Chat con {request.user.username}'))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+INFO 2025-10-01 16:21:49,663 views 8 135320460850880 API CALL: POST /api/conversations/ | User: rafael | Status: Success (New conversation: test)
+INFO 2025-10-01 16:42:20,849 views 8 128601827571392 API CALL: POST /api/signup/ | User: rafael | Status: Success (User Created)
+INFO 2025-10-01 16:49:40,003 views 8 133367450302144 API CALL: POST /api/signup/ | User: rafael | Status: Success (User Created)
+INFO 2025-10-01 16:56:04,190 views 8 130384396285632 API CALL: POST /api/signup/ | User: rafael | Status: Success (User Created)
+INFO 2025-10-01 17:04:14,072 consumers 8 128740020882304 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-01 17:04:52,762 views 8 128739927127744 API CALL: POST /api/signup/ | User: rafael | Status: Success (User Created)
+INFO 2025-10-01 17:04:57,348 consumers 8 128740020882304 WS CONNECTION ACCEPTED: User rafael connected to chats
+INFO 2025-10-01 17:06:04,400 views 8 128739909293760 API CALL: POST /api/signup/ | User: qa | Status: Success (User Created)
+WARNING 2025-10-01 17:06:11,433 consumers 8 128740020882304 WS CONNECTION DENIED (403): Anonymous user tried to connect to chats
+WARNING 2025-10-01 17:06:22,664 consumers 8 128740020882304 WS CONNECTION DENIED (403): Anonymous user tried to connect to chat
+WARNING 2025-10-01 17:07:19,590 consumers 8 128740020882304 WS CONNECTION DENIED (403): Anonymous user tried to connect to chats
+INFO 2025-10-01 17:26:31,118 consumers 8 132226287225728 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-01 17:27:19,895 views 8 132226194863808 API CALL: POST /api/signup/ | User: rafael | Status: Success (User Created)
+INFO 2025-10-01 17:27:23,429 consumers 8 132226287225728 WS CONNECTION ACCEPTED: User rafael connected to chats
+INFO 2025-10-01 17:27:39,399 views 8 132226175981248 API CALL: POST /api/signup/ | User: qa | Status: Success (User Created)
+INFO 2025-10-01 17:27:42,529 consumers 8 132226287225728 WS CONNECTION ACCEPTED: User qa connected to chats
+INFO 2025-10-01 17:28:59,613 views 8 132226175981248 API CALL: POST /api/signup/ | User: test | Status: Success (User Created)
+WARNING 2025-10-01 17:29:07,592 consumers 8 132226287225728 WS CONNECTION DENIED (403): Anonymous user tried to connect to chat
+INFO 2025-10-01 17:29:46,206 consumers 9 126519954684800 REDIS: Conexión directa a Redis para throttling e historial establecida.
+WARNING 2025-10-01 17:30:09,028 views 9 126519861049024 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'username': [ErrorDetail(string='Este nombre de usuario ya está registrado.', code='invalid')]}
+WARNING 2025-10-01 17:30:14,195 consumers 9 126519954684800 WS CONNECTION DENIED (403): Anonymous user tried to connect to chat
+WARNING 2025-10-01 17:30:22,074 consumers 9 126519954684800 WS CONNECTION DENIED (403): Anonymous user tried to connect to chats
+INFO 2025-10-01 17:35:13,960 consumers 8 135048220859264 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-01 17:35:57,879 views 8 135048126789312 API CALL: POST /api/signup/ | User: rafael | Status: Success (User Created)
+INFO 2025-10-01 17:42:23,444 consumers 8 138622250732416 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-01 17:52:37,452 consumers 8 123882859445120 REDIS: Conexión directa a Redis para throttling e historial establecida.
+WARNING 2025-10-01 17:53:04,382 views 8 123882765809344 API CALL: POST /api/login/ | User: rafael | Status: Failure (Invalid Credentials)
+ERROR 2025-10-01 17:53:12,640 views 8 123882765809344 API CALL: POST /api/signup/ | User: rafael | Internal Error: type object 'Token' has no attribute 'objects'
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 49, in post
+    token, created = Token.objects.get_or_create(user=user)
+                     ^^^^^^^^^^^^^
+AttributeError: type object 'Token' has no attribute 'objects'
+WARNING 2025-10-01 17:53:15,489 views 8 123882765809344 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'username': [ErrorDetail(string='Este nombre de usuario ya está registrado.', code='invalid')]}
+INFO 2025-10-01 18:02:12,798 consumers 9 128610389244800 REDIS: Conexión directa a Redis para throttling e historial establecida.
+WARNING 2025-10-01 18:02:25,930 views 9 128610295871168 API CALL: POST /api/login/ | User: qa | Status: Unauthorized (Invalid credentials)
+INFO 2025-10-01 18:02:33,146 views 9 128610295871168 API CALL: POST /api/signup/ | User: qa | Status: Success (User Created)
+WARNING 2025-10-01 18:02:33,173 consumers 9 128610389244800 WS CONNECTION DENIED (403): Anonymous user tried to connect to chats
+WARNING 2025-10-01 18:03:25,834 views 9 128610276988608 API CALL: POST /api/login/ | User: rafael | Status: Unauthorized (Invalid credentials)
+INFO 2025-10-01 18:10:15,619 consumers 8 139839891176320 REDIS: Conexión directa a Redis para throttling e historial establecida.
+WARNING 2025-10-01 18:10:23,785 middleware 8 139839798245056 WS AUTH FAILED: Invalid token key provided: b0c94dced7d151643e66f738587bcd9428d9f543
+WARNING 2025-10-01 18:10:23,797 consumers 8 139839891176320 WS CONNECTION DENIED (403): Anonymous user tried to connect to chats
+WARNING 2025-10-01 18:10:27,455 middleware 8 139839798245056 WS AUTH FAILED: Invalid token key provided: b0c94dced7d151643e66f738587bcd9428d9f543
+WARNING 2025-10-01 18:10:27,458 consumers 8 139839891176320 WS CONNECTION DENIED (403): Anonymous user tried to connect to chats
+WARNING 2025-10-01 18:10:31,285 views 8 139839705970368 API CALL: POST /api/login/ | User: qa | Status: Unauthorized (Invalid credentials)
+WARNING 2025-10-01 18:10:39,367 views 8 139839705970368 API CALL: POST /api/login/ | User: rafael | Status: Unauthorized (Invalid credentials)
+INFO 2025-10-01 18:13:12,935 consumers 8 132526501501824 REDIS: Conexión directa a Redis para throttling e historial establecida.
+WARNING 2025-10-01 18:13:33,596 middleware 8 132526408464064 WS AUTH FAILED: Invalid token key provided: b0c94dced7d151643e66f738587bcd9428d9f543
+WARNING 2025-10-01 18:13:33,607 consumers 8 132526501501824 WS CONNECTION DENIED (403): Anonymous user tried to connect to chats
+INFO 2025-10-01 18:13:39,938 views 8 132526316189376 API CALL: POST /api/signup/ | User: testuser | Status: Success (User Created)
+INFO 2025-10-01 18:13:39,987 consumers 8 132526501501824 WS CONNECTION ACCEPTED: User testuser connected to chats
+INFO 2025-10-01 18:13:50,700 consumers 8 132526501501824 WS CONNECTION ACCEPTED: User testuser connected to chats
+WARNING 2025-10-01 18:14:04,981 views 8 132526316189376 API CALL: POST /api/login/ | User: qa | Status: Unauthorized (Invalid credentials)
+WARNING 2025-10-01 18:14:23,379 views 8 132526316189376 API CALL: POST /api/login/ | User: qa | Status: Unauthorized (Invalid credentials)
+WARNING 2025-10-01 18:14:30,871 views 8 132526316189376 API CALL: POST /api/login/ | User: rafael | Status: Unauthorized (Invalid credentials)
+INFO 2025-10-01 18:14:33,838 views 8 132526316189376 API CALL: POST /api/signup/ | User: rafael | Status: Success (User Created)
+INFO 2025-10-01 18:14:33,880 consumers 8 132526501501824 WS CONNECTION ACCEPTED: User rafael connected to chats
+INFO 2025-10-01 18:15:06,642 views 8 132526316189376 API CALL: POST /api/login/ | User: testuser | Status: Success (Authenticated)
+INFO 2025-10-01 18:15:06,687 consumers 8 132526501501824 WS CONNECTION ACCEPTED: User testuser connected to chats
+WARNING 2025-10-01 18:15:15,516 views 8 132526316189376 API CALL: POST /api/login/ | User: qa | Status: Unauthorized (Invalid credentials)
+INFO 2025-10-01 18:15:17,513 views 8 132526316189376 API CALL: POST /api/signup/ | User: qa | Status: Success (User Created)
+INFO 2025-10-01 18:15:17,553 consumers 8 132526501501824 WS CONNECTION ACCEPTED: User qa connected to chats
+INFO 2025-10-01 18:15:42,607 views 8 132526316189376 API CALL: POST /api/login/ | User: testuser | Status: Success (Authenticated)
+INFO 2025-10-01 18:15:42,647 consumers 8 132526501501824 WS CONNECTION ACCEPTED: User testuser connected to chats
+INFO 2025-10-01 18:19:50,061 consumers 8 135404534193024 REDIS: Conexión directa a Redis para throttling e historial establecida.
+WARNING 2025-10-01 18:20:08,340 views 8 135404441302720 API CALL: POST /api/login/ | User: qa | Status: Unauthorized (Invalid credentials)
+WARNING 2025-10-01 18:20:11,638 views 8 135404441302720 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'username': [ErrorDetail(string='Este nombre de usuario ya está registrado.', code='invalid')]}
+WARNING 2025-10-01 18:20:21,682 views 8 135404441302720 API CALL: POST /api/login/ | User: qa | Status: Unauthorized (Invalid credentials)
+WARNING 2025-10-01 18:20:31,357 views 8 135404441302720 API CALL: POST /api/login/ | User: qa | Status: Unauthorized (Invalid credentials)
+WARNING 2025-10-01 18:20:48,549 views 8 135404441302720 API CALL: POST /api/login/ | User: rafael | Status: Unauthorized (Invalid credentials)
+INFO 2025-10-01 20:25:10,760 consumers 8 124582936599424 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-01 20:25:58,957 consumers 8 124582936599424 WS CONNECTION ACCEPTED: User testuser connected to chats
+WARNING 2025-10-01 20:26:06,339 views 8 124582833940160 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'username': [ErrorDetail(string='Este nombre de usuario ya está registrado.', code='invalid')]}
+INFO 2025-10-01 20:26:10,325 views 8 124582833940160 API CALL: POST /api/login/ | User: testuser | Status: Success (Authenticated)
+INFO 2025-10-01 20:26:10,368 consumers 8 124582936599424 WS CONNECTION ACCEPTED: User testuser connected to chats
+INFO 2025-10-01 20:26:14,488 consumers 8 124582936599424 WS CONNECTION ACCEPTED: User testuser connected to chats
+INFO 2025-10-01 20:26:26,366 consumers 8 124582936599424 WS CONNECTION ACCEPTED: User testuser connected to chats
+INFO 2025-10-01 20:27:12,855 consumers 8 124582936599424 WS CONNECTION ACCEPTED: User qa connected to chats
+WARNING 2025-10-01 20:27:23,083 views 8 124582833940160 API CALL: POST /api/signup/ | User: Anonymous | Status: Validation Error | Errors: {'username': [ErrorDetail(string='Este nombre de usuario ya está registrado.', code='invalid')]}
+INFO 2025-10-01 20:27:31,672 views 8 124582833940160 API CALL: POST /api/signup/ | User: test2 | Status: Success (User Created)
+INFO 2025-10-01 20:27:31,709 consumers 8 124582936599424 WS CONNECTION ACCEPTED: User test2 connected to chats
+INFO 2025-10-01 20:35:02,458 consumers 9 138398693686144 REDIS: Conexión directa a Redis para throttling e historial establecida.
+WARNING 2025-10-01 20:35:46,517 middleware 9 138398599739072 WS AUTH FAILED: Invalid token key provided: 7dbfa3968e6d84220acd0a4274fbf6801e1ebd62
+WARNING 2025-10-01 20:35:46,532 consumers 9 138398693686144 WS CONNECTION DENIED (403): Anonymous user tried to connect to chats
+WARNING 2025-10-01 20:35:51,781 views 9 138398582953664 API CALL: POST /api/login/ | User: testuser | Status: Unauthorized (Invalid credentials)
+WARNING 2025-10-01 20:35:54,885 views 9 138398582953664 API CALL: POST /api/login/ | User: testuser | Status: Unauthorized (Invalid credentials)
+WARNING 2025-10-01 20:35:59,398 middleware 9 138398599739072 WS AUTH FAILED: Invalid token key provided: 7dbfa3968e6d84220acd0a4274fbf6801e1ebd62
+WARNING 2025-10-01 20:35:59,401 consumers 9 138398693686144 WS CONNECTION DENIED (403): Anonymous user tried to connect to chats
+WARNING 2025-10-01 20:36:05,375 views 9 138398582953664 API CALL: POST /api/login/ | User: qa | Status: Unauthorized (Invalid credentials)
+INFO 2025-10-01 20:36:07,530 views 9 138398582953664 API CALL: POST /api/signup/ | User: qa | Status: Success (User Created)
+INFO 2025-10-01 20:36:07,570 consumers 9 138398693686144 WS CONNECTION ACCEPTED: User qa connected to chats
+INFO 2025-10-01 20:36:14,599 views 9 138398582953664 API CALL: POST /api/signup/ | User: testuser | Status: Success (User Created)
+INFO 2025-10-01 20:36:14,637 consumers 9 138398693686144 WS CONNECTION ACCEPTED: User testuser connected to chats
+WARNING 2025-10-01 20:36:23,359 middleware 9 138398599739072 WS AUTH FAILED: Invalid token key provided: 9bfabfecd9f10f063030358b77660b7b596eb105
+WARNING 2025-10-01 20:36:23,363 consumers 9 138398693686144 WS CONNECTION DENIED (403): Anonymous user tried to connect to chats
+WARNING 2025-10-01 20:36:27,993 views 9 138398582953664 API CALL: POST /api/login/ | User: test2 | Status: Unauthorized (Invalid credentials)
+INFO 2025-10-01 20:36:29,517 views 9 138398582953664 API CALL: POST /api/signup/ | User: test2 | Status: Success (User Created)
+INFO 2025-10-01 20:36:29,553 consumers 9 138398693686144 WS CONNECTION ACCEPTED: User test2 connected to chats
+INFO 2025-10-01 21:01:17,831 consumers 8 132512445025152 REDIS: Conexión directa a Redis para throttling e historial establecida.
+WARNING 2025-10-01 21:01:44,907 views 8 132512351254208 API CALL: POST /api/login/ | User: rafael | Status: Unauthorized (Invalid credentials)
+INFO 2025-10-01 21:01:48,546 views 8 132512351254208 API CALL: POST /api/signup/ | User: rafael | Status: Success (User Created and Hashed)
+WARNING 2025-10-01 21:02:47,142 views 8 132512351254208 API CALL: POST /api/login/ | User: qa | Status: Unauthorized (Invalid credentials)
+INFO 2025-10-01 21:02:50,220 views 8 132512351254208 API CALL: POST /api/signup/ | User: qa | Status: Success (User Created and Hashed)
+INFO 2025-10-01 21:03:30,436 views 8 132512351254208 API CALL: POST /api/login/ | User: qa | Status: Success (Authenticated)
+INFO 2025-10-01 21:10:55,990 consumers 8 138206364322688 REDIS: Conexión directa a Redis para throttling e historial establecida.
+WARNING 2025-10-01 21:12:02,226 views 8 138206272026304 API CALL: POST /api/login/ | User: rafael | Status: Unauthorized (Invalid credentials)
+INFO 2025-10-01 21:12:06,242 views 8 138206272026304 API CALL: POST /api/signup/ | User: rafael | Status: Success (User Created and Hashed)
+INFO 2025-10-01 21:32:49,666 consumers 8 127068057795456 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-01 21:37:09,356 consumers 8 137355010546560 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-01 21:39:25,045 consumers 8 126031961811840 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-01 21:43:54,416 consumers 8 133153186610048 REDIS: Conexión directa a Redis para throttling e historial establecida.
+WARNING 2025-10-01 21:44:21,598 views 8 133153094104768 API CALL: POST /api/login/ | User: rafael | Status: Unauthorized (Invalid credentials)
+INFO 2025-10-01 21:44:24,769 views 8 133153094104768 API CALL: POST /api/signup/ | User: rafael | Status: Success (User Created and Hashed)
+INFO 2025-10-01 21:44:24,817 views 8 133153094104768 API CALL: GET /api/conversations/ | User: rafael | Status: Success (Listed 0 conversations)
+INFO 2025-10-01 21:44:48,993 views 8 133153094104768 API CALL: POST /api/conversations/ | User: rafael | Status: Success (New conversation: chats)
+INFO 2025-10-01 21:44:49,038 views 8 133153094104768 API CALL: GET /api/conversations/ | User: rafael | Status: Success (Listed 1 conversations)
+INFO 2025-10-01 21:44:49,102 consumers 8 133153186610048 WS CONNECTION ACCEPTED: User rafael connected to chats
+INFO 2025-10-01 21:45:19,686 views 8 133153071023808 API CALL: POST /api/signup/ | User: qa | Status: Success (User Created and Hashed)
+INFO 2025-10-01 21:45:19,726 views 8 133153071023808 API CALL: GET /api/conversations/ | User: qa | Status: Success (Listed 0 conversations)
+ERROR 2025-10-01 21:45:38,006 views 8 133153071023808 API CALL: POST /api/conversations/ | User: qa | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 122, in post
+    conversation = Conversation.objects.create(name=data.get('name', f'Chat con {request.user.username}'))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+ERROR 2025-10-01 21:45:54,091 views 8 133153071023808 API CALL: POST /api/conversations/ | User: qa | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 122, in post
+    conversation = Conversation.objects.create(name=data.get('name', f'Chat con {request.user.username}'))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+INFO 2025-10-01 21:46:00,919 views 8 133153071023808 API CALL: GET /api/conversations/ | User: qa | Status: Success (Listed 0 conversations)
+ERROR 2025-10-01 21:46:39,493 views 8 133153071023808 API CALL: POST /api/conversations/ | User: qa | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 122, in post
+    conversation = Conversation.objects.create(name=data.get('name', f'Chat con {request.user.username}'))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+INFO 2025-10-01 21:47:16,429 views 8 133153071023808 API CALL: POST /api/signup/ | User: testuser | Status: Success (User Created and Hashed)
+INFO 2025-10-01 21:47:16,466 views 8 133153071023808 API CALL: GET /api/conversations/ | User: testuser | Status: Success (Listed 0 conversations)
+ERROR 2025-10-01 21:47:25,117 views 8 133153071023808 API CALL: POST /api/conversations/ | User: testuser | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 122, in post
+    conversation = Conversation.objects.create(name=data.get('name', f'Chat con {request.user.username}'))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+ERROR 2025-10-01 21:47:35,618 views 8 133153071023808 API CALL: POST /api/conversations/ | User: testuser | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 122, in post
+    conversation = Conversation.objects.create(name=data.get('name', f'Chat con {request.user.username}'))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+ERROR 2025-10-01 21:47:36,742 views 8 133153071023808 API CALL: POST /api/conversations/ | User: testuser | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 122, in post
+    conversation = Conversation.objects.create(name=data.get('name', f'Chat con {request.user.username}'))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+ERROR 2025-10-01 21:47:37,711 views 8 133153071023808 API CALL: POST /api/conversations/ | User: testuser | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 122, in post
+    conversation = Conversation.objects.create(name=data.get('name', f'Chat con {request.user.username}'))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+ERROR 2025-10-01 21:47:37,937 views 8 133153071023808 API CALL: POST /api/conversations/ | User: testuser | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 122, in post
+    conversation = Conversation.objects.create(name=data.get('name', f'Chat con {request.user.username}'))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+ERROR 2025-10-01 21:47:38,154 views 8 133153071023808 API CALL: POST /api/conversations/ | User: testuser | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 122, in post
+    conversation = Conversation.objects.create(name=data.get('name', f'Chat con {request.user.username}'))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+INFO 2025-10-01 21:47:41,474 views 8 133153071023808 API CALL: POST /api/conversations/ | User: testuser | Status: Success (New conversation: chat)
+INFO 2025-10-01 21:47:41,526 views 8 133153071023808 API CALL: GET /api/conversations/ | User: testuser | Status: Success (Listed 1 conversations)
+INFO 2025-10-01 21:47:41,575 consumers 8 133153186610048 WS CONNECTION ACCEPTED: User testuser connected to chat
+INFO 2025-10-01 21:47:55,524 views 8 133153071023808 API CALL: GET /api/conversations/ | User: rafael | Status: Success (Listed 1 conversations)
+INFO 2025-10-01 21:47:55,582 consumers 8 133153186610048 WS CONNECTION ACCEPTED: User rafael connected to chats
+ERROR 2025-10-01 21:48:11,314 views 8 133153071023808 API CALL: POST /api/conversations/ | User: rafael | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chat) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chat) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 122, in post
+    conversation = Conversation.objects.create(name=data.get('name', f'Chat con {request.user.username}'))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chat) already exists.
+
+ERROR 2025-10-01 21:48:16,497 views 8 133153071023808 API CALL: POST /api/conversations/ | User: rafael | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chat) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chat) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 122, in post
+    conversation = Conversation.objects.create(name=data.get('name', f'Chat con {request.user.username}'))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chat) already exists.
+
+ERROR 2025-10-01 21:48:26,783 views 8 133153071023808 API CALL: POST /api/conversations/ | User: testuser | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 122, in post
+    conversation = Conversation.objects.create(name=data.get('name', f'Chat con {request.user.username}'))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+ERROR 2025-10-01 21:48:27,575 views 8 133153071023808 API CALL: POST /api/conversations/ | User: testuser | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 122, in post
+    conversation = Conversation.objects.create(name=data.get('name', f'Chat con {request.user.username}'))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+INFO 2025-10-01 21:57:47,584 consumers 8 124946703985536 REDIS: Conexión directa a Redis para throttling e historial establecida.
+WARNING 2025-10-01 21:58:28,937 views 8 124946611173056 API CALL: POST /api/login/ | User: rafael | Status: Unauthorized (Invalid credentials)
+INFO 2025-10-01 21:58:33,380 views 8 124946611173056 API CALL: POST /api/signup/ | User: rafael | Status: Success (User Created and Hashed)
+INFO 2025-10-01 21:58:33,423 views 8 124946611173056 API CALL: GET /api/conversations/ | User: rafael | Status: Success (Listed 0 conversations)
+INFO 2025-10-01 21:59:11,985 views 8 124946611173056 API CALL: POST /api/login/ | User: rafael | Status: Success (Authenticated)
+INFO 2025-10-01 21:59:12,022 views 8 124946611173056 API CALL: GET /api/conversations/ | User: rafael | Status: Success (Listed 0 conversations)
+INFO 2025-10-01 22:21:47,628 consumers 8 139584914070400 REDIS: Conexión directa a Redis para throttling e historial establecida.
+WARNING 2025-10-01 22:22:26,550 views 8 139584820213440 API CALL: POST /api/login/ | User: rafael | Status: Unauthorized (Invalid credentials)
+INFO 2025-10-01 22:22:29,463 views 8 139584820213440 API CALL: POST /api/signup/ | User: rafael | Status: Success (User Created and Hashed)
+INFO 2025-10-01 22:22:29,503 views 8 139584820213440 API CALL: GET /api/conversations/ | User: rafael | Status: Success (Listed 0 conversations)
+INFO 2025-10-01 22:22:46,854 views 8 139584820213440 API CALL: POST /api/conversations/ | User: rafael | Status: Success (Conversation created by rafael: chats)
+INFO 2025-10-01 22:22:46,897 views 8 139584820213440 API CALL: GET /api/conversations/ | User: rafael | Status: Success (Listed 1 conversations)
+INFO 2025-10-01 22:22:46,960 consumers 8 139584914070400 WS CONNECTION ACCEPTED: User rafael connected to chats
+INFO 2025-10-01 22:23:10,373 views 8 139584799229632 API CALL: POST /api/signup/ | User: qa | Status: Success (User Created and Hashed)
+INFO 2025-10-01 22:23:10,411 views 8 139584799229632 API CALL: GET /api/conversations/ | User: qa | Status: Success (Listed 0 conversations)
+ERROR 2025-10-01 22:23:16,945 views 8 139584799229632 API CALL: POST /api/conversations/ | User: qa | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 120, in post
+    conversation = Conversation.objects.create(name=room_name)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+ERROR 2025-10-01 22:23:20,384 views 8 139584799229632 API CALL: POST /api/conversations/ | User: qa | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 120, in post
+    conversation = Conversation.objects.create(name=room_name)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chats) already exists.
+
+INFO 2025-10-01 22:24:43,260 consumers 8 139584914070400 WS CONNECTION ACCEPTED: User rafael connected to chats
+INFO 2025-10-01 22:24:59,710 views 8 139584799229632 API CALL: POST /api/conversations/ | User: rafael | Status: Success (Conversation created by rafael: chat | Invited user: qa)
+INFO 2025-10-01 22:24:59,751 views 8 139584799229632 API CALL: GET /api/conversations/ | User: rafael | Status: Success (Listed 2 conversations)
+INFO 2025-10-01 22:24:59,803 consumers 8 139584914070400 WS CONNECTION ACCEPTED: User rafael connected to chat
+INFO 2025-10-01 22:25:01,844 consumers 8 139584914070400 WS CONNECTION ACCEPTED: User rafael connected to chat
+INFO 2025-10-01 22:25:11,892 views 8 139584799229632 API CALL: GET /api/conversations/ | User: qa | Status: Success (Listed 1 conversations)
+INFO 2025-10-01 22:25:11,944 consumers 8 139584914070400 WS CONNECTION ACCEPTED: User qa connected to chat
+INFO 2025-10-01 22:25:13,980 consumers 8 139584914070400 WS CONNECTION ACCEPTED: User qa connected to chat
+ERROR 2025-10-01 22:27:20,124 views 8 139584799229632 API CALL: POST /api/conversations/ | User: rafael | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chat) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chat) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 120, in post
+    conversation = Conversation.objects.create(name=room_name)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chat) already exists.
+
+ERROR 2025-10-01 22:27:39,096 views 8 139584799229632 API CALL: POST /api/conversations/ | User: rafael | FATAL ERROR creating conversation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chat) already exists.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chat) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/chats/views.py", line 120, in post
+    conversation = Conversation.objects.create(name=room_name)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/models/sql/compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/usr/local/lib/python3.11/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/usr/local/lib/python3.11/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "chats_conversation_name_key"
+DETAIL:  Key (name)=(chat) already exists.
+
+INFO 2025-10-01 22:37:07,135 consumers 8 131778100890496 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-01 22:37:55,800 views 8 131778008315584 SIGNUP: Usuario rafael creado y token generado.
+INFO 2025-10-01 22:38:08,536 views 8 131778008315584 CONVERSATION CREATE: Usuarios no encontrados/omitidos: qa, testuser.
+INFO 2025-10-01 22:38:08,643 consumers 8 131778100890496 WS CONNECTION ACCEPTED: User rafael connected to chat
+INFO 2025-10-01 22:38:33,244 views 8 131777918138048 SIGNUP: Usuario testuser creado y token generado.
+INFO 2025-10-01 22:38:49,180 consumers 8 131778100890496 WS CONNECTION ACCEPTED: User rafael connected to chat
+INFO 2025-10-01 22:39:28,364 views 8 131777918138048 SIGNUP: Usuario qa creado y token generado.
+INFO 2025-10-01 22:53:51,492 consumers 8 124956439985024 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-01 22:54:40,936 consumers 8 124956439985024 WS CONNECTION ACCEPTED: User testuser connected to chats
+INFO 2025-10-01 23:08:26,437 consumers 8 138414873299840 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-01 23:09:10,094 consumers 8 138414873299840 WS CONNECTION ACCEPTED: User testuser connected to chats
+INFO 2025-10-01 23:18:57,538 consumers 8 124705522097024 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-01 23:19:28,284 views 8 124705428207296 DEBUG: Usuario testuser esta viendo conversaciones con IDs: []
+WARNING 2025-10-01 23:19:40,700 views 8 124705428207296 USUARIOS NO ENCONTRADOS al crear sala: qa, rafael
+INFO 2025-10-01 23:19:40,749 views 8 124705428207296 DEBUG: Usuario testuser esta viendo conversaciones con IDs: [1]
+INFO 2025-10-01 23:19:40,795 consumers 8 124705522097024 WS CONNECTION ACCEPTED: User testuser connected to chat
+INFO 2025-10-01 23:20:04,508 views 8 124705428207296 DEBUG: Usuario qa esta viendo conversaciones con IDs: []
+INFO 2025-10-01 23:40:24,538 consumers 8 134662827785088 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-01 23:41:05,444 views 8 134662735263424 DEBUG: Usuario testuser esta viendo conversaciones con IDs: []
+WARNING 2025-10-01 23:41:15,283 views 8 134662735263424 USUARIOS NO ENCONTRADOS al crear sala: qa, rafael
+INFO 2025-10-01 23:41:15,332 views 8 134662735263424 DEBUG: Usuario testuser esta viendo conversaciones con IDs: [1]
+INFO 2025-10-01 23:41:15,350 consumers 8 134662827785088 WS CONNECTION ACCEPTED: User testuser connected to general
+INFO 2025-10-01 23:41:31,715 views 8 134662735263424 DEBUG: Usuario qa esta viendo conversaciones con IDs: []
+INFO 2025-10-01 23:44:52,080 consumers 8 131010370997120 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-01 23:45:39,652 views 8 131010278717120 DEBUG: Usuario testuser esta viendo conversaciones con IDs: []
+WARNING 2025-10-01 23:45:50,176 views 8 131010278717120 USUARIOS NO ENCONTRADOS al crear sala: qa, rafael
+INFO 2025-10-01 23:45:50,225 views 8 131010278717120 DEBUG: Usuario testuser esta viendo conversaciones con IDs: [1]
+INFO 2025-10-01 23:45:50,247 consumers 8 131010370997120 WS CONNECTION ACCEPTED: User testuser connected to general
+INFO 2025-10-01 23:46:07,243 views 8 131010278717120 DEBUG: Usuario qa esta viendo conversaciones con IDs: []
+INFO 2025-10-02 00:03:26,651 consumers 8 125455854996352 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-02 00:04:49,106 consumers 8 125455854996352 WS CONNECTION ACCEPTED: User testuser connected to chats
+INFO 2025-10-02 00:16:30,894 consumers 8 125455854996352 WS CONNECTION ACCEPTED: User qa connected to general
+INFO 2025-10-02 00:16:48,867 consumers 8 125455854996352 WS CONNECTION ACCEPTED: User testuser connected to general
+INFO 2025-10-02 00:19:49,400 consumers 8 125455854996352 WS CONNECTION ACCEPTED: User testuser connected to chats
+INFO 2025-10-02 00:27:14,467 consumers 8 136410014329728 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-02 00:33:58,102 consumers 8 135525026626432 REDIS: Conexión directa a Redis para throttling e historial establecida.
+INFO 2025-10-02 00:35:41,508 consumers 8 135525026626432 WS CONNECTION ACCEPTED: User qa connected to general
+INFO 2025-10-02 00:35:58,007 consumers 8 135525026626432 WS CONNECTION ACCEPTED: User rafael connected to general
+INFO 2025-10-02 00:36:09,695 consumers 8 135525026626432 WS CONNECTION ACCEPTED: User rafael connected to general
+INFO 2025-10-02 00:37:56,102 consumers 8 135525026626432 WS CONNECTION ACCEPTED: User testuser connected to general
+INFO 2025-10-02 00:58:19,142 consumers 8 128693954046848 REDIS: Conexión directa a Redis para throttling e historial establecida.
+ERROR 2025-10-02 02:08:24,137 consumers 10460 15952 REDIS: No se pudo conectar a Redis. La funcionalidad de chat (historial/throttling) no funcionar�.
+INFO 2025-10-02 01:36:29,755 consumers 8 123341984156544 REDIS: Conexión directa a Redis para throttling e historial establecida.
