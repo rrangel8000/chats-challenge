@@ -1358,3 +1358,12 @@ INFO 2025-10-02 12:46:03,922 api_logger MESSAGE BROADCAST: User testuser message
 INFO 2025-10-02 12:48:23,091 api_logger REDIS: Direct Redis client ready at redis:6379.
 INFO 2025-10-02 12:48:33,228 api_logger WS CONNECTION ACCEPTED: User testuser connected to general
 INFO 2025-10-02 12:48:37,544 api_logger WS MESSAGE RECEIVED: User testuser sent message (len: 4) to room chat_general.
+INFO 2025-10-02 12:48:37,556 api_logger MESSAGE BROADCAST: User testuser message broadcasted successfully in chat_general.
+INFO 2025-10-02 12:51:18,448 api_logger WS DISCONNECTED: User testuser left room chat_general with code None.
+INFO 2025-10-02 12:51:18,496 api_logger WS CONNECTION ACCEPTED: User testuser connected to foods
+INFO 2025-10-02 12:52:55,243 api_logger WS CONNECTION ACCEPTED: User rafael connected to foods
+INFO 2025-10-02 12:53:02,273 api_logger WS MESSAGE RECEIVED: User rafael sent message (len: 2) to room chat_foods.
+INFO 2025-10-02 12:53:02,283 api_logger MESSAGE BROADCAST: User rafael message broadcasted successfully in chat_foods.
+INFO 2025-10-02 12:53:08,460 api_logger WS DISCONNECTED: User rafael left room chat_foods with code 1001.
+INFO 2025-10-02 12:53:11,018 api_logger WS CONNECTION ACCEPTED: User rafael connected to foods
+INFO 2025-10-02 12:53:20,840 api_logger WS MESSAGE RECEIVED: User testuser sent message (len: 9) to room chat_foods.
