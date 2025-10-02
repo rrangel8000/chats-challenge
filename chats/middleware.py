@@ -10,11 +10,7 @@ api_logger = logging.getLogger('api_logger')
 User = get_user_model()
 
 @database_sync_to_async
-def get_user_by_token(token_key):
-    """
-    Busca el usuario asociado a la clave de token proporcionada
-    utilizando el modelo Token de Django REST Framework.
-    """
+def get_user_by_token(token_key):    
     if not token_key:
         return AnonymousUser()
         
@@ -31,11 +27,7 @@ def get_user_by_token(token_key):
         return AnonymousUser()
 
 
-class QueryStringTokenAuthMiddleware:
-    """
-    Middleware que lee el token de la query string (ws://.../?token=xyz)
-    y lo usa para autenticar al usuario.
-    """
+class QueryStringTokenAuthMiddleware:    
     def __init__(self, inner):
         self.inner = inner
 
@@ -50,7 +42,7 @@ class QueryStringTokenAuthMiddleware:
                 scope['user'] = await get_user_by_token(token_key)
                 
             except Exception as e:                
-                api_logger.error(f"Error general en QueryStringTokenAuthMiddleware: {e}")
+                api_logger.error(f"Error in QueryStringTokenAuthMiddleware: {e}")
                 scope['user'] = AnonymousUser()
         
         return await self.inner(scope, receive, send)

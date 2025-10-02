@@ -55,8 +55,9 @@
             background-color: #ffffff;
         }
 
-        .message-bubble {
-            max-width: 80%;
+        .message-bubble {            
+            max-width: 450px; 
+            width: fit-content; 
             padding: 0.5rem 0.75rem;
             border-radius: 0.75rem;
             margin-bottom: 0.5rem;
@@ -109,6 +110,10 @@
                 flex-grow: 1;
                 min-height: 50vh;
             }
+            .message-bubble {
+                /* Permitimos que en móvil ocupe un poco más si es necesario, pero aun con límite */
+                max-width: 85%;
+            }
         }
     </style>
 </head>
@@ -125,8 +130,8 @@
                 <div class="flex gap-2">
                     <button id="signup-btn" class="flex-1 bg-green-500 text-white p-2 rounded-md hover:bg-green-600 transition duration-150 text-sm">Register</button>
                     <button id="login-btn" class="flex-1 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-150 text-sm">Login</button>
-                </div>
             </div>
+                </div>
 
             <div class="p-3 bg-blue-50 rounded-lg shadow-sm mt-2">
                 <h3 class="text-md font-semibold mb-2 text-blue-700">Create New Chat</h3>
@@ -462,8 +467,8 @@
             sendBtn.disabled = false;
             
             document.querySelectorAll('.room-item').forEach(item => {
-                item.classList.remove('active');
-                if (item.onclick.toString().includes(`joinRoom('${roomName}', ${conversationId})`)) {
+                item.classList.remove('active');                
+                if (item.querySelector('p:first-child').textContent === roomName) {
                     item.classList.add('active');
                 }
             });
@@ -512,7 +517,7 @@
                      headers: {
                          'Authorization': `Token ${authToken}`
                      }
-                 });
+                   });
 
                  const messages = await response.json();
 
@@ -525,9 +530,9 @@
                  } else {
                      log('error', `Failed to load history: ${messages.detail || JSON.stringify(messages)}`);
                  }
-             } catch (error) {
-                 log('error', `Network error loading history: ${error.message}`);
-             }
+               } catch (error) {
+                   log('error', `Network error loading history: ${error.message}`);
+               }
         }
 
         function displayMessage(user, message) {

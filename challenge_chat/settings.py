@@ -23,7 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',    
+    'django.contrib.staticfiles', 
     'rest_framework', 
     'rest_framework.authtoken',
     'corsheaders',    
@@ -61,12 +61,11 @@ TEMPLATES = [
     },
 ]
 
-# Usa el motor ASGI
 WSGI_APPLICATION = 'challenge_chat.wsgi.application'
 ASGI_APPLICATION = 'challenge_chat.asgi.application'
 
 
-DB_HOST = os.environ.get('DATABASE_HOST', 'localhost')
+DB_HOST = os.environ.get('DATABASE_HOST', 'db') 
 DB_PORT = os.environ.get('DATABASE_PORT', '5432')
 DB_NAME = os.environ.get('DATABASE_NAME', 'chats')
 DB_USER = os.environ.get('DATABASE_USER', 'postgres')
@@ -83,17 +82,18 @@ DATABASES = {
     }
 }
 
-REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
+REDIS_HOST = os.environ.get('REDIS_HOST', 'redis') 
 REDIS_PORT = os.environ.get('REDIS_PORT', 6379)
 
 CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.pubsub.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [(REDIS_HOST, REDIS_PORT)],
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("redis", 6379)],
         },
     },
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -125,9 +125,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [        
-        'rest_framework.authentication.TokenAuthentication',        
-        'rest_framework.authentication.SessionAuthentication',        
+    'DEFAULT_AUTHENTICATION_CLASSES': [              
+        'rest_framework.authentication.TokenAuthentication', 
+        'rest_framework.authentication.SessionAuthentication', 
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
@@ -148,7 +148,7 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(BASE_DIR, 'logs', 'api_requests.log'), # Escribirá en logs/api_requests.log
-            'maxBytes': 1024 * 1024 * 5, # 5 MB
+            'maxBytes': 1024 * 1024 * 5, 
             'backupCount': 5,
             'formatter': 'api_formatter',
         },

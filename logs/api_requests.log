@@ -1340,3 +1340,21 @@ INFO 2025-10-02 11:37:09,634 api_logger REDIS: Direct Redis connection for throt
 INFO 2025-10-02 11:47:29,029 api_logger REDIS: Direct Redis connection for throttling and history established at redis:6379.
 INFO 2025-10-02 11:54:33,022 api_logger REDIS: Direct Redis connection for throttling and history established at redis:6379.
 INFO 2025-10-02 11:57:14,601 api_logger REDIS: Direct Redis connection for throttling and history established at redis:6379.
+INFO 2025-10-02 12:15:36,864 api_logger REDIS: Direct Redis connection for throttling and history established at redis:6379.
+INFO 2025-10-02 12:23:34,538 api_logger REDIS: Direct Redis connection for throttling and history established at redis:6379.
+INFO 2025-10-02 12:31:17,962 api_logger REDIS: Direct Redis client ready at redis:6379.
+INFO 2025-10-02 12:35:11,053 api_logger REDIS: Direct Redis client ready at redis:6379.
+INFO 2025-10-02 12:35:24,995 api_logger WS CONNECTION ACCEPTED: User testuser connected to chats
+INFO 2025-10-02 12:35:28,828 api_logger WS MESSAGE RECEIVED: User testuser sent message (len: 2) to room chat_chats.
+INFO 2025-10-02 12:35:28,844 api_logger MESSAGE BROADCAST: User testuser message broadcasted successfully in chat_chats.
+INFO 2025-10-02 12:35:37,866 api_logger WS DISCONNECTED: User testuser left room chat_chats with code None.
+INFO 2025-10-02 12:35:37,908 api_logger WS CONNECTION ACCEPTED: User testuser connected to general
+INFO 2025-10-02 12:35:44,038 api_logger WS MESSAGE RECEIVED: User testuser sent message (len: 4) to room chat_general.
+INFO 2025-10-02 12:35:44,050 api_logger MESSAGE BROADCAST: User testuser message broadcasted successfully in chat_general.
+INFO 2025-10-02 12:45:46,907 api_logger REDIS: Direct Redis client ready at redis:6379.
+INFO 2025-10-02 12:45:58,874 api_logger WS CONNECTION ACCEPTED: User testuser connected to chats
+INFO 2025-10-02 12:46:03,907 api_logger WS MESSAGE RECEIVED: User testuser sent message (len: 2) to room chat_chats.
+INFO 2025-10-02 12:46:03,922 api_logger MESSAGE BROADCAST: User testuser message broadcasted successfully in chat_chats.
+INFO 2025-10-02 12:48:23,091 api_logger REDIS: Direct Redis client ready at redis:6379.
+INFO 2025-10-02 12:48:33,228 api_logger WS CONNECTION ACCEPTED: User testuser connected to general
+INFO 2025-10-02 12:48:37,544 api_logger WS MESSAGE RECEIVED: User testuser sent message (len: 4) to room chat_general.
