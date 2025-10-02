@@ -105,7 +105,7 @@ REDIS (Broker / Cache): Serves as the Channel Layer (message bus between Consume
 
 Main Flow: The Client connects to Django via WebSocket. Django uses the Redis Channel Layer to broadcast the message to all other Consumers connected to the same room.
 
-![Diagrama de Arquitectura](challenge_chat/images/architecture.jpg)
+[![Diagrama de Arquitectura](challenge_chat/images/architecture.jpg)](https://github.com/rrangel8000/chats-challenge/blob/main/challenge_chat/images/architecture.jpg)
 
 2. Message Flow Diagram (with Throttling)
 This diagram details the message sending process, specifically highlighting the rate limiting step implemented using Redis Sorted Sets (ZSET) for the sliding window log approach, as seen in chats/consumers.py.
