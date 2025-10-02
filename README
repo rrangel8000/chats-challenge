@@ -1,4 +1,5 @@
-💬 Challenge Chat (Django Channels, Redis, PostgreSQL)
+# Challenge Chat (Django Channels, Redis, PostgreSQL)
+
 This project is a real-time chat application built with Django Channels that implements essential backend services for high-availability environments, including Throttling (message rate limiting) and Structured Logging.
 
 - Prerequisites
@@ -13,39 +14,40 @@ Python 3.11 and pip (Optional, only for running tests outside of Docker).
 - Local Execution with Docker Compose
 The application is designed to be fully run using Docker Compose, ensuring that the application, database, and Redis are on the same network.
 
-1. Start the Services
+Start the Services
 From the project root directory (challenge_chat), execute:
 
 docker-compose up -d --build
 
 This will build the Django container and then start the services: PostgreSQL, Redis, Django (app), and PGAdmin.
 
-2. Application Access
+Application Access
+
 Chat Application: Open your browser at http://localhost:8000.
 
 PGAdmin (DB Admin): Open your browser at http://localhost:5050.
 
-3. Important Note for Multi-User Features
+Important Note for Multi-User Features
 All features related to multi-user messaging, such as creating conversations and adding participants via the REST API endpoints, require users to be authenticated. You must register users via the API or create them manually (see step 4).
 
-4. Create a Superuser (Optional)
+Create a Superuser (Optional)
 If you need a user to access the Django admin:
 
 docker-compose exec app python manage.py createsuperuser
 
-Integration Tests and Throttling Validation
+- Integration Tests and Throttling Validation
 To verify that the rate limiting logic (Throttling) and message persistence in Redis work correctly, run the tests inside the app container (where Redis and PostgreSQL are accessible by hostname).
 
-1. Install Test Dependencies
+Install Test Dependencies
 Ensure you have Python dependencies installed within your virtual environment if running Pytest locally, or simply trust that your Dockerfile has already installed everything if using the exec command.
 
-2. Run Throttling Tests
+Run Throttling Tests
 Execute the following command to run only the Redis integration tests, which will validate the Throttling requirement (it will take about 11 seconds to complete):
 
 # The application service is called 'app' in the docker-compose.yml
 docker-compose exec app pytest chats/tests/test_throttling.py
 
-3. Expected Result
+Expected Result
 If the tests are successful, you will see:
 
 ================================================== 3 passed in 10.XXs ==================================================
@@ -53,7 +55,7 @@ If the tests are successful, you will see:
 - Logging and Log Files
 The project is configured to log API calls (in this case, WebSocket calls) in a specific format, fulfilling the Logging requirement.
 
-1. File Location
+File Location
 The log file is generated inside the application container. To view it in real-time or after a session, you can access the container:
 
 # Enter the 'app' container terminal
@@ -64,7 +66,7 @@ Once inside the container, the file is located at:
 # While inside the container (sh)
 cat logs/api_requests.log
 
-2. Log Format
+Log Format
 Each WebSocket log entry (connection, received message, throttling, disconnection) is recorded in the following format:
 
 [TIMESTAMP] [LEVEL] [LOGGER_NAME] [MODULE] - [CUSTOM_MESSAGE]
@@ -86,3 +88,62 @@ Waits for the DB to be ready.
 Runs pytest (including the test_throttling.py tests) to validate all requirements in a clean, isolated environment.
 
 Check the Actions tab on GitHub for the status of the executions.
+
+# System Architecture and Message Flow
+The system is designed to handle asynchronous and scalable communications, separating HTTP (synchronous) requests from WebSocket (asynchronous) requests using ASGI (Daphne) and Django Channels.
+
+1. High-Level Architecture Diagram
+The architecture relies on three core components:
+
+CLIENT / USER: The frontend initiating REST API requests (login/signup) and WebSocket (WS) connections for real-time chat.
+
+DJANGO (ASGI) Server Consumers: The application core. It handles synchronous requests (via Django WSGI) and asynchronous WebSocket requests (via Daphne/ASGI and Consumers). Consumers manage chat logic, validation, and message distribution.
+
+POSTGRESQL (Persistent DB): Stores all persistent data (users, message history, conversations).
+
+REDIS (Broker / Cache): Serves as the Channel Layer (message bus between Consumers) and is crucial for the Throttling logic to rate-limit messages per user.
+
+Main Flow: The Client connects to Django via WebSocket. Django uses the Redis Channel Layer to broadcast the message to all other Consumers connected to the same room.
+
+2. Message Flow Diagram (with Throttling)
+This diagram details the message sending process, specifically highlighting the rate limiting step implemented using Redis Sorted Sets (ZSET) for the sliding window log approach, as seen in chats/consumers.py.
+
+Actor
+
+Function
+
+CLIENT
+
+Initiates the process by sending the message over the WebSocket.
+
+CHAT CONSUMER
+
+Receives the message, verifies authentication, and applies the Throttling logic.
+
+REDIS (THROTTLE)
+
+Stores and counts the user's recent message timestamps to determine if the limit is exceeded.
+
+OTHER CONSUMERS
+
+Receive the signal from Redis and re-send the message to their connected Clients.
+
+Step-by-Step Flow:
+
+Message Send (WS): The Client sends a message to the Chat Consumer.
+
+Throttling Check: The Consumer queries Redis (using ZREM, ZADD, ZCARD atomically in a pipeline) to check if the user has exceeded the message limit within the defined time window (THROTTLE_RATE in THROTTLE_PERIOD).
+
+Count Return: Redis returns the current count of messages in the window.
+
+DECISION:
+
+If the limit EXCEEDS (e.g., 6 messages in 10 seconds), the Consumer blocks the message and sends an error notification back to the Client.
+
+If the limit DOES NOT EXCEED, the Consumer saves the message (via ORM to PostgreSQL) and publishes the signal to Redis.
+
+group_send: The Consumer uses the Redis Channel Layer to publish the message payload to the specific chat group (room).
+
+Receive Signal: All Other Consumers subscribed to that group receive the signal via the Channel Layer.
+
+Message Resend (WS): Each Consumer receives the signal and re-sends the message data (via send_json) to the final Client through their respective WebSockets.
